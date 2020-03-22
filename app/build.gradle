@@ -81,6 +81,8 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     //progress bar
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }

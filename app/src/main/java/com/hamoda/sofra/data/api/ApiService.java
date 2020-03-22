@@ -5,6 +5,8 @@ package com.hamoda.sofra.data.api;
 import com.hamoda.sofra.data.model.allRestaurant.AllRestaurant;
 import com.hamoda.sofra.data.model.city.City;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -23,4 +25,5 @@ public interface ApiService {
     @GET("restaurants")
     Call<AllRestaurant> getFilterRestaurant(@Query("keyword") String keyword
             ,@Query("region_id") int regionId);
+
 }

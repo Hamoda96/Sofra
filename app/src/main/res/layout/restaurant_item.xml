@@ -1,98 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_8sdp">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="@dimen/_minus50sdp"
-        android:layout_toLeftOf="@+id/restaurant_civ_restaurant_image"
-        android:background="@drawable/rouned_shape"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/restaurant_item_tv_restaurant_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_55sdp"
-            android:text="دجاج كنتاكي"
-            android:textColor="#D22550"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/restaurant_item_tv_status_open_close_color"
-            android:layout_width="@dimen/_10sdp"
-            android:layout_height="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_18sdp"
-            android:layout_toRightOf="@+id/restaurant_item_tv_status_open_close"
-            android:background="@drawable/circle_shape_online"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/restaurant_item_tv_status_open_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_17sdp"
-            android:text="مفتوح"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_8ssp" />
-
-        <RatingBar
-            android:id="@+id/restaurant_item_rb_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_below="@id/restaurant_item_tv_restaurant_name"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/_60sdp"
-            android:numStars="4"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:isIndicator="true"
-            android:stepSize="1.0"
-            android:transformPivotX="@dimen/_150sdp" />
-
-        <TextView
-            android:id="@+id/restaurant_item_tv_restaurant_price_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_55sdp"
-            android:layout_below="@id/restaurant_item_rb_ratingbar"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:text="مفتوح"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_8ssp" />
-
-        <TextView
-            android:id="@+id/restaurant_item_tv_restaurant_delivery_charge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:layout_marginEnd="@dimen/_55sdp"
-            android:layout_below="@id/restaurant_item_tv_restaurant_price_down"
-            android:text="مفتوح"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_8ssp" />
-
-    </RelativeLayout>
+    android:layout_margin="@dimen/_8sdp"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/restaurant_civ_restaurant_image"
         android:layout_width="@dimen/_75sdp"
         android:layout_height="@dimen/_75sdp"
+        android:layout_gravity="right|center"
+        android:textSize="@dimen/_35ssp"
+        android:elevation="8dp"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:textSize="@dimen/_35ssp"
         android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginEnd="@dimen/_minus50sdp"
+        app:cardBackgroundColor="#F8F8F8"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="@dimen/_12sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rouned_shape"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/restaurant_item_tv_restaurant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_55sdp"
+                android:text="دجاج كنتاكي"
+                android:textColor="#D22550"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/restaurant_item_tv_status_open_close_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_toRightOf="@+id/restaurant_item_tv_status_open_close"
+                android:background="@drawable/circle_shape_online"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/restaurant_item_tv_status_open_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:text="مفتوح"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_8ssp" />
+
+            <RatingBar
+                android:id="@+id/restaurant_item_rb_ratingbar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/restaurant_item_tv_restaurant_name"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_60sdp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:transformPivotX="@dimen/_150sdp" />
+
+            <TextView
+                android:id="@+id/restaurant_item_tv_restaurant_price_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/restaurant_item_rb_ratingbar"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_55sdp"
+                android:text="مفتوح"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_8ssp" />
+
+            <TextView
+                android:id="@+id/restaurant_item_tv_restaurant_delivery_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/restaurant_item_tv_restaurant_price_down"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_55sdp"
+                android:text="مفتوح"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_8ssp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

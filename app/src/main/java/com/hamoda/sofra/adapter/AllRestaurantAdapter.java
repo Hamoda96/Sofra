@@ -91,6 +91,10 @@ public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdap
         return restaurantData.size();
     }
 
+    public void setList(List<AllRestaurantData> restaurantData){
+        this.restaurantData =restaurantData;
+        notifyDataSetChanged();
+    }
     public class RestaurantViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.restaurant_item_tv_restaurant_name)

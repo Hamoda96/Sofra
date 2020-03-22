@@ -1,5 +1,7 @@
 package com.hamoda.sofra.helper;
 
+import android.util.Log;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,10 +26,17 @@ public abstract class OnEndLess extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        Log.d("endless4", "onLoadMore: ");
 
         visibleItemCount = recyclerView.getChildCount();
         totalItemCount = mLinearLayoutManager.getItemCount();
         firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+        Log.d("endless6", "onLoadMore: " + recyclerView.getChildCount());
+        Log.d("endless7", "onLoadMore: "+ mLinearLayoutManager.getItemCount());
+        Log.d("endless8", "onLoadMore: " +mLinearLayoutManager.findFirstVisibleItemPosition());
+        Log.d("endless9", "onLoadMore: " + loading);
+
 
         if (loading) {
             if (totalItemCount > previousTotal) {
@@ -39,6 +48,7 @@ public abstract class OnEndLess extends RecyclerView.OnScrollListener {
         if (!loading && (totalItemCount - visibleItemCount)
                 <= (firstVisibleItem + visibleThreshold)) {
             // End has been reached
+            Log.d("endless5", "onLoadMore: ");
 
 
             // Do something
