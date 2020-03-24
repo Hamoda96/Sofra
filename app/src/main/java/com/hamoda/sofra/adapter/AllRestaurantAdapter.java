@@ -3,6 +3,7 @@ package com.hamoda.sofra.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +58,15 @@ public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdap
     }
 
     private void setAction(RestaurantViewHolder holder, int position) {
-//        holder.view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("retaurant_id", restaurantData.get(position).getId());
+                navController.navigate(R.id.action_allRestaurantFragment_to_restaurantDetailsContainerFragment,bundle);
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -91,10 +95,6 @@ public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdap
         return restaurantData.size();
     }
 
-    public void setList(List<AllRestaurantData> restaurantData){
-        this.restaurantData =restaurantData;
-        notifyDataSetChanged();
-    }
     public class RestaurantViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.restaurant_item_tv_restaurant_name)

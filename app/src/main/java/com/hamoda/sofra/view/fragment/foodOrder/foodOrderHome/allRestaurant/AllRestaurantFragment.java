@@ -1,12 +1,9 @@
-package com.hamoda.sofra.view.fragment.foodOrder.allRestaurant;
+package com.hamoda.sofra.view.fragment.foodOrder.foodOrderHome.allRestaurant;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -16,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,12 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.hamoda.sofra.data.api.RetrofitClient.getClient;
 import static com.hamoda.sofra.helper.GeneralRequest.getSpinnerData;
 import static com.hamoda.sofra.helper.HelperMethod.disappearKeypad;
 
@@ -163,7 +153,7 @@ public class AllRestaurantFragment extends Fragment implements IAllRestaurant.Vi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController= Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
     }
 
     @Override
@@ -174,18 +164,19 @@ public class AllRestaurantFragment extends Fragment implements IAllRestaurant.Vi
 
     @Override
     public void setListener() {
-        citySearch = allRestaurantFragmentEtSearchCity.getText().toString();
         allRestaurantFragmentBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 disappearKeypad(getActivity(), view);
                 citiesSelectedId = citiesAdapter.selectedId;
-                if (citiesSelectedId == 0) {
-                    allRestaurantPresenter.getAllRestaurant(1);
-
-                } else {
+                citySearch = allRestaurantFragmentEtSearchCity.getText().toString().trim();
+                reInit();
+                if (!allRestaurantFragmentEtSearchCity.getText().toString().isEmpty() || citiesSelectedId != 0) {
                     filter = true;
                     allRestaurantPresenter.getAllRestaurantFilter(1, citySearch, citiesSelectedId);
+                } else {
+                    filter = false;
+                    allRestaurantPresenter.getAllRestaurant(1);
                 }
             }
         });
@@ -194,28 +185,18 @@ public class AllRestaurantFragment extends Fragment implements IAllRestaurant.Vi
     @Override
     public void onGetRestaurantSuccess(AllRestaurant allRestaurant, int page) {
         try {
+
             // to stop refresh
             allRestaurantFragmentSrlSwipeRefreshLayout.setRefreshing(false);
+
             // this condition for reset data  -- because resetData method
             if (allRestaurant.getStatus() == 1) {
                 if (page == 1) {
-                    Log.d("page", "onGetRestaurantSuccess: " + page);
-                    onEndLess.current_page = 1;
-                    onEndLess.previous_page = 1;
-                    onEndLess.previousTotal = 0;
-
-                    // set adapter again - because we reset data in swipe
-                    restaurantAdapter = new AllRestaurantAdapter((AppCompatActivity) getActivity(), restaurantData, navController);
-                    allRestaurantFragmentRvRestaurantList.setAdapter(restaurantAdapter);
+                    reInit();
                 }
             }
+            loadData(allRestaurant);
 
-            // load the data from api
-            if (allRestaurant.getStatus() == 1) {
-                maxPage = allRestaurant.getData().getLastPage();
-                restaurantData.addAll(allRestaurant.getData().getData());
-                restaurantAdapter.notifyDataSetChanged();
-            }
         } catch (Exception e) {
 
         }
@@ -224,39 +205,28 @@ public class AllRestaurantFragment extends Fragment implements IAllRestaurant.Vi
     @Override
     public void onGetRestaurantFilterSuccess(AllRestaurant allRestaurant, int page) {
         try {
-            Toast.makeText(getActivity(), "ggggggggg", Toast.LENGTH_SHORT).show();
             // to stop refresh
             allRestaurantFragmentSrlSwipeRefreshLayout.setRefreshing(false);
+
             // this condition for reset data  -- because resetData method
             if (allRestaurant.getStatus() == 1) {
                 if (page == 1) {
-                    Log.d("page", "onGetRestaurantSuccess: " + page);
-                    onEndLess.current_page = 1;
-                    onEndLess.previous_page = 1;
-                    onEndLess.previousTotal = 0;
-
-                    // set adapter again - because we reset data in swipe
-                    restaurantAdapter = new AllRestaurantAdapter((AppCompatActivity) getActivity(), restaurantData, navController);
-                    allRestaurantFragmentRvRestaurantList.setAdapter(restaurantAdapter);
+                    reInit();
                 }
             }
+            loadData(allRestaurant);
 
-            // load the data from api
-            if (allRestaurant.getStatus() == 1) {
-                maxPage = allRestaurant.getData().getLastPage();
-                restaurantData.addAll(allRestaurant.getData().getData());
-                restaurantAdapter.notifyDataSetChanged();
-            }
         } catch (Exception e) {
 
         }
     }
 
+    // get spinner of City
     @Override
     public void onGetSpinnerSuccess(City city) {
         citiesAdapter = new SpinnerAdapter(getActivity());
         if (city.getStatus() == 1) {
-            citiesAdapter.setData(city.getData().getData(), "Haaa");
+            citiesAdapter.setData(city.getData().getData(), getString(R.string.city));
             allRestaurantFragmentSpCity.setAdapter(citiesAdapter);
             for (int i = 0; i < citiesAdapter.generalResponseDataList.size(); i++) {
 
@@ -281,5 +251,23 @@ public class AllRestaurantFragment extends Fragment implements IAllRestaurant.Vi
     @Override
     public void hideProgress() {
         HelperMethod.dismissProgressDialog();
+    }
+
+    // this method for reinit for the pagination
+    private void reInit() {
+        onEndLess.previousTotal = 0;
+        onEndLess.current_page = 1;
+        onEndLess.previous_page = 1;
+        restaurantData = new ArrayList<>();
+        restaurantAdapter = new AllRestaurantAdapter((AppCompatActivity) getActivity(), restaurantData, navController);
+        allRestaurantFragmentRvRestaurantList.setAdapter(restaurantAdapter);
+    }
+
+    // this method for load the data
+    private void loadData(AllRestaurant allRestaurant) {
+        // load the data from api
+        maxPage = allRestaurant.getData().getLastPage();
+        restaurantData.addAll(allRestaurant.getData().getData());
+        restaurantAdapter.notifyDataSetChanged();
     }
 }

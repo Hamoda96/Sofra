@@ -1,11 +1,5 @@
-package com.hamoda.sofra.view.fragment.foodOrder.allRestaurant;
+package com.hamoda.sofra.view.fragment.foodOrder.foodOrderHome.allRestaurant;
 
-import android.app.Activity;
-import android.view.View;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.hamoda.sofra.adapter.SpinnerAdapter;
 import com.hamoda.sofra.data.api.RetrofitClient;
 import com.hamoda.sofra.data.model.allRestaurant.AllRestaurant;
 import com.hamoda.sofra.data.model.city.City;
@@ -13,7 +7,6 @@ import com.hamoda.sofra.data.model.city.City;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static com.hamoda.sofra.data.api.RetrofitClient.getClient;
 import static com.hamoda.sofra.helper.GeneralRequest.getSpinnerData;
@@ -56,7 +49,14 @@ public class AllRestaurantPresenterImpl implements IAllRestaurant.Presenter {
     @Override
     public void getAllRestaurantFilter(int page, String citySearch, int cityId) {
         restaurantView.showProgress();
-        getClient().getFilterRestaurant(citySearch, cityId).enqueue(new Callback<AllRestaurant>() {
+        Call<AllRestaurant> call;
+        if (cityId == 0) {
+            call =  RetrofitClient.getClient().getFilterRestaurant(page, citySearch);
+        } else {
+            call =  RetrofitClient.getClient().getFilterRestaurant(page, citySearch, cityId);
+        }
+
+        call.enqueue(new Callback<AllRestaurant>() {
             @Override
             public void onResponse(Call<AllRestaurant> call, Response<AllRestaurant> response) {
 
@@ -84,14 +84,11 @@ public class AllRestaurantPresenterImpl implements IAllRestaurant.Presenter {
                restaurantView.hideProgress();
                if (response.body().getStatus()==1) {
                    restaurantView.onGetSpinnerSuccess(response.body());
-                   Toast.makeText(restaurantView.getActivity(), "ssssss", Toast.LENGTH_SHORT).show();
                }
            }
 
            @Override
            public void onFailure(Call<City> call, Throwable t) {
-               Toast.makeText(restaurantView.getActivity(), "fffffffff", Toast.LENGTH_SHORT).show();
-
                restaurantView.hideProgress();
                restaurantView.onError(t.getMessage());
            }

@@ -6,6 +6,8 @@ import android.graphics.Region;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class AllRestaurantData {
 
     @SerializedName("id")
@@ -59,6 +61,12 @@ public class AllRestaurantData {
     @SerializedName("region")
     @Expose
     private Region region;
+    @SerializedName("restaurant_id")
+    @Expose
+    private String restaurantId;
+    @SerializedName("categories")
+    @Expose
+    private List<Object> categories = null;
 
     public Integer getId() {
         return id;
@@ -196,4 +204,19 @@ public class AllRestaurantData {
         this.region = region;
     }
 
+    public List<Object> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Object> categories) {
+        this.categories = categories;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 }

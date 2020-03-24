@@ -1,5 +1,6 @@
 package com.hamoda.sofra.view.fragment.splahCycle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.hamoda.sofra.R;
+import com.hamoda.sofra.view.activity.FoodOrderActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,7 +73,8 @@ public class StartFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.start_fragment_btn_food_order:
-                navController.navigate(R.id.action_startFragment_to_allRestaurantFragment);
+                Intent intent = new Intent(getActivity(), FoodOrderActivity.class);
+                    startActivity(intent);
                 break;
             case R.id.start_fragment_btn_buy_food:
                 break;

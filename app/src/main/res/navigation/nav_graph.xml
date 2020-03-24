@@ -20,12 +20,8 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
-            android:id="@+id/action_startFragment_to_allRestaurantFragment"
-            app:destination="@id/allRestaurantFragment" />
+            android:id="@+id/xml"
+            app:destination="@id/nav_graph_food_order.xml" />
     </fragment>
-    <fragment
-        android:id="@+id/allRestaurantFragment"
-        android:name="com.hamoda.sofra.view.fragment.foodOrder.allRestaurant.AllRestaurantFragment"
-        android:label="fragment_all_restaurant"
-        tools:layout="@layout/fragment_all_restaurant" />
+    <include app:graph="@navigation/nav_graph_food_order" />
 </navigation>

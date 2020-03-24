@@ -1,10 +1,7 @@
-package com.hamoda.sofra.view.fragment.foodOrder.allRestaurant;
+package com.hamoda.sofra.view.fragment.foodOrder.foodOrderHome.allRestaurant;
 
 import android.app.Activity;
-import android.view.View;
-import android.widget.Spinner;
 
-import com.hamoda.sofra.adapter.SpinnerAdapter;
 import com.hamoda.sofra.data.model.allRestaurant.AllRestaurant;
 import com.hamoda.sofra.data.model.city.City;
 
